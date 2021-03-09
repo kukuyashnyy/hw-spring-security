@@ -1,7 +1,8 @@
 package org.itstep.init;
 
+import org.itstep.domain.CustomUser;
 import org.itstep.domain.Group;
-import org.itstep.domain.Teacher;
+import org.itstep.repository.CustomUserRepository;
 import org.itstep.repository.GroupRepository;
 import org.itstep.repository.TeacherRepository;
 import org.itstep.service.GroupService;
@@ -13,6 +14,7 @@ import org.itstep.service.dto.TeacherDto;
 import org.itstep.service.mapper.GroupMapper;
 import org.itstep.service.mapper.TeacherMapper;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -29,17 +31,19 @@ public class InitDatabase {
     final TeacherService teacherService;
     final GroupRepository groupRepository;
     final TeacherRepository teacherRepository;
+    final CustomUserRepository customUserRepository;
 
     private static boolean inited;
     final private TeacherMapper teacherMapper;
 
-    public InitDatabase(StudentService studentService, GroupService groupService, TeacherService teacherService, GroupMapper groupMapper, GroupRepository groupRepository, TeacherRepository teacherRepository, TeacherMapper teacherMapper) {
+    public InitDatabase(StudentService studentService, GroupService groupService, TeacherService teacherService, GroupMapper groupMapper, GroupRepository groupRepository, TeacherRepository teacherRepository, CustomUserRepository customUserRepository, TeacherMapper teacherMapper) {
         this.studentService = studentService;
         this.groupService = groupService;
         this.teacherService = teacherService;
         this.groupMapper = groupMapper;
         this.groupRepository = groupRepository;
         this.teacherRepository = teacherRepository;
+        this.customUserRepository = customUserRepository;
         this.teacherMapper = teacherMapper;
     }
 
@@ -88,6 +92,10 @@ public class InitDatabase {
 //        groupRepository.saveAll(groupList.stream().limit(2).collect(Collectors.toList()));
         teacherService.save(teacherDto);
 
+        customUserRepository.save(new CustomUser("user", "$2a$10$cL3cndnaK3e/y1cSLIO7delRW.I9CScjjm70Upj6OUCEDOH7AYAQq", "ROLE_USER"));
+
+//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//        System.out.println(bCryptPasswordEncoder.encode("user"));;
         inited = true;
     }
 }
