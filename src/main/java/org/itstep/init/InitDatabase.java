@@ -1,8 +1,8 @@
 package org.itstep.init;
 
-import org.itstep.domain.CustomUser;
+import org.itstep.domain.User;
 import org.itstep.domain.Group;
-import org.itstep.repository.CustomUserRepository;
+import org.itstep.repository.UserRepository;
 import org.itstep.repository.GroupRepository;
 import org.itstep.repository.TeacherRepository;
 import org.itstep.service.GroupService;
@@ -14,7 +14,6 @@ import org.itstep.service.dto.TeacherDto;
 import org.itstep.service.mapper.GroupMapper;
 import org.itstep.service.mapper.TeacherMapper;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -25,26 +24,26 @@ import java.util.stream.Collectors;
 @Profile("dev")
 @Component
 public class InitDatabase {
-    final StudentService studentService;
-    final GroupService groupService;
-    final GroupMapper groupMapper;
-    final TeacherService teacherService;
-    final GroupRepository groupRepository;
-    final TeacherRepository teacherRepository;
-    final CustomUserRepository customUserRepository;
+//    final StudentService studentService;
+//    final GroupService groupService;
+//    final GroupMapper groupMapper;
+//    final TeacherService teacherService;
+//    final GroupRepository groupRepository;
+//    final TeacherRepository teacherRepository;
+    final UserRepository userRepository;
 
     private static boolean inited;
-    final private TeacherMapper teacherMapper;
+//    final private TeacherMapper teacherMapper;
 
-    public InitDatabase(StudentService studentService, GroupService groupService, TeacherService teacherService, GroupMapper groupMapper, GroupRepository groupRepository, TeacherRepository teacherRepository, CustomUserRepository customUserRepository, TeacherMapper teacherMapper) {
-        this.studentService = studentService;
-        this.groupService = groupService;
-        this.teacherService = teacherService;
-        this.groupMapper = groupMapper;
-        this.groupRepository = groupRepository;
-        this.teacherRepository = teacherRepository;
-        this.customUserRepository = customUserRepository;
-        this.teacherMapper = teacherMapper;
+    public InitDatabase(StudentService studentService, GroupService groupService, TeacherService teacherService, GroupMapper groupMapper, GroupRepository groupRepository, TeacherRepository teacherRepository, UserRepository userRepository, TeacherMapper teacherMapper) {
+//        this.studentService = studentService;
+//        this.groupService = groupService;
+//        this.teacherService = teacherService;
+//        this.groupMapper = groupMapper;
+//        this.groupRepository = groupRepository;
+//        this.teacherRepository = teacherRepository;
+        this.userRepository = userRepository;
+//        this.teacherMapper = teacherMapper;
     }
 
     @PostConstruct
@@ -52,37 +51,37 @@ public class InitDatabase {
         if (inited) return;
 
         // List of groups
-        List<GroupDto> groups = List.of(
-                new GroupDto("Java summer 2019"),
-                new GroupDto("Java summer 2018"),
-                new GroupDto("Java summer 2017"),
-                new GroupDto("Internet Marketing 2018"),
-                new GroupDto("Java summer 2011"),
-                new GroupDto("Java summer 2016"),
-                new GroupDto("Java summer 2020"),
-                new GroupDto("Web autumn 2011"),
-                new GroupDto("Web autumn 2012"),
-                new GroupDto("Web autumn 2013"),
-                new GroupDto("Web autumn 2014"),
-                new GroupDto("Web autumn 2015"),
-                new GroupDto("Web autumn 2016"),
-                new GroupDto("Web autumn 2017"),
-                new GroupDto("Web autumn 2018")
-        );
-        List<Group> groupList = groups.stream().map(groupMapper::toEntity).collect(Collectors.toList());
+//        List<GroupDto> groups = List.of(
+//                new GroupDto("Java summer 2019"),
+//                new GroupDto("Java summer 2018"),
+//                new GroupDto("Java summer 2017"),
+//                new GroupDto("Internet Marketing 2018"),
+//                new GroupDto("Java summer 2011"),
+//                new GroupDto("Java summer 2016"),
+//                new GroupDto("Java summer 2020"),
+//                new GroupDto("Web autumn 2011"),
+//                new GroupDto("Web autumn 2012"),
+//                new GroupDto("Web autumn 2013"),
+//                new GroupDto("Web autumn 2014"),
+//                new GroupDto("Web autumn 2015"),
+//                new GroupDto("Web autumn 2016"),
+//                new GroupDto("Web autumn 2017"),
+//                new GroupDto("Web autumn 2018")
+//        );
+//        List<Group> groupList = groups.stream().map(groupMapper::toEntity).collect(Collectors.toList());
         // Init groups
-        groups.forEach(groupService::save);
+//        groups.forEach(groupService::save);
 //        groupRepository.saveAll(groupList);
 
         // Init students
-        studentService.save(new StudentDto("Вася", "Пупкин",
-                LocalDate.of(2001, 1, 1), 1));
+//        studentService.save(new StudentDto("Вася", "Пупкин",
+//                LocalDate.of(2001, 1, 1), 1));
 
-        studentService.save(new StudentDto("Маша", "Ефросинина",
-                LocalDate.of(1986, 2, 12), 1));
+//        studentService.save(new StudentDto("Маша", "Ефросинина",
+//                LocalDate.of(1986, 2, 12), 1));
 
         // Init teachers
-        TeacherDto teacherDto = new TeacherDto(null, "Василий", "Петрович", List.of(1, 2));
+//        TeacherDto teacherDto = new TeacherDto(null, "Василий", "Петрович", List.of(1, 2));
 //        Teacher teacher = teacherMapper.toEntity(teacherDto);
 //        groupList = groupRepository.findAllWithEagerRelationshipsById(teacherDto.getGroupsId());
 //        teacher.addGroups(groupList.get(0));
@@ -90,9 +89,9 @@ public class InitDatabase {
 //
 //        teacherRepository.save(teacher);
 //        groupRepository.saveAll(groupList.stream().limit(2).collect(Collectors.toList()));
-        teacherService.save(teacherDto);
+//        teacherService.save(teacherDto);
 
-        customUserRepository.save(new CustomUser("user", "$2a$10$cL3cndnaK3e/y1cSLIO7delRW.I9CScjjm70Upj6OUCEDOH7AYAQq", "ROLE_USER"));
+        userRepository.save(new User("user", "$2a$10$cL3cndnaK3e/y1cSLIO7delRW.I9CScjjm70Upj6OUCEDOH7AYAQq", "ROLE_USER"));
 
 //        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 //        System.out.println(bCryptPasswordEncoder.encode("user"));;

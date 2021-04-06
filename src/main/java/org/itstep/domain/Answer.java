@@ -4,28 +4,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "ANSWERS")
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class CustomUser {
+public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
-    @Column(name = "USERNAME")
     @NonNull
-    private String username;
+    private String name;
 
-    @Column(name = "PASSWORD")
-    @NonNull
-    private String password;
+    private Boolean correct;
 
-    @Column(name = "ROLE")
-    @NonNull
-    private String role;
+    @ManyToOne
+//    @JoinColumn(name = "question_fk")
+    private Question question;
 }

@@ -1,10 +1,9 @@
 package org.itstep.service;
 
-import org.itstep.domain.CustomUser;
-import org.itstep.repository.CustomUserRepository;
+import org.itstep.domain.User;
+import org.itstep.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,18 +12,18 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class CustomUserDetailService implements UserDetailsService {
+public class UserDetailService implements UserDetailsService {
 
     @Autowired
-    private CustomUserRepository customUserRepository;
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<CustomUser> customUserOptional = customUserRepository.findUserByUsername(username);
+        Optional<User> customUserOptional = userRepository.findUserByUsername(username);
         if (customUserOptional.isEmpty()) throw new UsernameNotFoundException("Not found by " + username);
-        CustomUser customUser = customUserOptional.get();
-        return new User(customUser.getUsername(),
-                customUser.getPassword(),
-                AuthorityUtils.createAuthorityList(customUser.getRole()));
+        User user = customUserOptional.get();
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+                user.getPassword(),
+                AuthorityUtils.createAuthorityList(user.getRole()));
     }
 }

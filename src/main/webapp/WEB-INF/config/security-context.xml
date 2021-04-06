@@ -29,14 +29,14 @@
 <!--                <security:user name="admin" authorities="ROLE_USER" password="{noop}admin" />-->
 <!--            </security:user-service>-->
 <!--        </security:authentication-provider>-->
-        <security:authentication-provider user-service-ref="customUserDetailService">
+        <security:authentication-provider user-service-ref="userDetailService">
             <security:password-encoder ref="passwordEncoder" />
         </security:authentication-provider>
     </security:authentication-manager>
 
     <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="passwordEncoder"/>
 
-    <bean class="org.itstep.service.CustomUserDetailService" id="customUserDetailService" />
+    <bean class="org.itstep.service.UserDetailService" id="UserDetailService" />
 
     <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
 

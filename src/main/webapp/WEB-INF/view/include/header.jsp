@@ -16,15 +16,15 @@
 
 <nav>
     <div class="nav-wrapper">
-        <a href="<spring:url value="/"/>" class="brand-logo"><i class="material-icons">school</i> Academy</a>
+<%--        <a href="<spring:url value="/"/>" class="brand-logo"><i class="material-icons">school</i> Academy</a>--%>
         <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="<spring:url value="/"/>">Home</a></li>
             <!-- Dropdown Trigger -->
-            <li><a class="dropdown-trigger" href="#!" data-target="dropdown-students">Students<i class="material-icons right">arrow_drop_down</i></a></li>
-            <li><a class="dropdown-trigger" href="#!" data-target="dropdown-groups">Groups<i class="material-icons right">arrow_drop_down</i></a></li>
-            <li><a class="dropdown-trigger" href="#!" data-target="dropdown-teachers">Teachers<i class="material-icons right">arrow_drop_down</i></a></li>
-            <li><a href="<spring:url value="/h2console"/>" target="_blank">H2 Console</a></li>
+<%--            <li><a class="dropdown-trigger" href="#!" data-target="dropdown-students">Students<i class="material-icons right">arrow_drop_down</i></a></li>--%>
+<%--            <li><a class="dropdown-trigger" href="#!" data-target="dropdown-groups">Groups<i class="material-icons right">arrow_drop_down</i></a></li>--%>
+<%--            <li><a class="dropdown-trigger" href="#!" data-target="dropdown-teachers">Teachers<i class="material-icons right">arrow_drop_down</i></a></li>--%>
+
             <!-- Modal Trigger -->
             <sec:authorize access="isAuthenticated()" var="auth" />
             <c:choose>
@@ -32,9 +32,11 @@
                     <li><a class="waves-effect waves-light modal-trigger" href="/logout">Sing out</a></li>
                 </c:when>
                 <c:otherwise>
+                    <li><a class="waves-effect waves-light modal-trigger" href="/register">Register</a></li>
                     <li><a class="waves-effect waves-light modal-trigger" href="/login">Sing in</a></li>
                 </c:otherwise>
             </c:choose>
+            <li><a href="<spring:url value="/h2console"/>" target="_blank">H2 Console</a></li>
 
         </ul>
     </div>
